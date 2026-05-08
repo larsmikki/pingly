@@ -1,0 +1,12 @@
+{
+  "name": "Pingly",
+  "short_name": "Pingly",
+  "description": "Self-hosted URL uptime monitor",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0a0a0a",
+  "theme_color": "#eab308",
+  "icons": [
+    { "src": "/apple-touch-icon.png", "sizes": "180x180", "type": "image/png", "purpose": "any maskable" }
+  ]
+}

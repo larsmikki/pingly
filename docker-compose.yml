@@ -1,0 +1,17 @@
+services:
+  pingly:
+    image: larsmikki/pingly:latest
+    container_name: pingly
+    ports:
+      - "3040:3040"
+    volumes:
+      - pingly-data:/app/data
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "wget", "--spider", "-q", "http://localhost:3040/api/health"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+
+volumes:
+  pingly-data:

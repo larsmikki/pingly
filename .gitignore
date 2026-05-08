@@ -1,0 +1,40 @@
+node_modules/
+dist/
+dist-ssr/
+dist-server/
+*.local
+data/
+.env
+.env.*
+*.log
+
+# Build artifacts
+*.tsbuildinfo
+*.js
+*.ts.map
+*.d.ts
+*.d.ts.map
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Test coverage
+coverage/
+
+# Claude AI files
+.claude/
+
+# Windows batch files
+*.bat
+
+# Tool-specific
+.gstack/
+.code-review-graph/
