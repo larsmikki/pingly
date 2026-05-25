@@ -26,13 +26,13 @@
 - Multiple built-in themes (light and dark)
 - SQLite — no external database required
 
-## Requirements
+## Getting started
 
-- Docker and Docker Compose
+Pick whichever install path matches your setup. All paths land on [http://localhost:3040](http://localhost:3040).
 
-## Docker setup
+### 1. Docker (Docker Desktop, NAS, or any Docker server)
 
-### Quick start
+Works on Synology, Unraid, TrueNAS, QNAP, Proxmox, or a plain Docker host.
 
 ```bash
 docker run -d \
@@ -43,9 +43,7 @@ docker run -d \
   larsmikki/pingly:latest
 ```
 
-Then open [http://localhost:3040](http://localhost:3040).
-
-### Docker Compose (recommended)
+Or with Compose:
 
 ```yaml
 services:
@@ -61,6 +59,49 @@ services:
 volumes:
   pingly-data:
 ```
+
+### 2. Local install on Windows
+
+Requires [Git for Windows](https://git-scm.com/download/win) and [Node.js 20+](https://nodejs.org/).
+
+```powershell
+git clone https://github.com/larsmikki/pingly.git
+cd pingly
+npm install
+npm run dev
+```
+
+For a production build: `npm run build && npm start`.
+
+### 3. Local install on macOS
+
+```bash
+brew install node git
+git clone https://github.com/larsmikki/pingly.git
+cd pingly
+npm install
+npm run dev
+```
+
+For a production build: `npm run build && npm start`.
+
+### 4. Local install on Linux
+
+Debian/Ubuntu:
+
+```bash
+curl -fsSL https://deb.nodesource.com/setup_20.x | sudo -E bash -
+sudo apt-get install -y nodejs git
+
+git clone https://github.com/larsmikki/pingly.git
+cd pingly
+npm install
+npm run dev
+```
+
+On Fedora/RHEL use `dnf install nodejs git`; on Arch use `pacman -S nodejs npm git`.
+
+For a production build: `npm run build && npm start`.
 
 ## Configuration
 

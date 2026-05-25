@@ -1,5 +1,4 @@
 import { Link, Outlet, useLocation } from 'react-router-dom'
-import { useTheme } from '@/contexts/ThemeContext'
 import Footer from '@/components/Footer'
 
 const SettingsIcon = () => (
@@ -9,7 +8,6 @@ const SettingsIcon = () => (
 )
 
 export default function Layout() {
-  const { theme } = useTheme()
   const location = useLocation()
 
   const navItems = [
@@ -17,20 +15,12 @@ export default function Layout() {
   ]
 
   return (
-    <div className="min-h-screen flex flex-col" style={{ background: theme.bg, color: theme.text }}>
-      <header
-        className="sticky top-0 z-40 backdrop-blur-md"
-        style={{
-          background: `${theme.surface}dd`,
-          borderBottom: `1px solid ${theme.border}`,
-        }}
-      >
+    <div className="min-h-screen flex flex-col bg-bg text-text">
+      <header className="sticky top-0 z-40 backdrop-blur-md bg-surface/90 border-b border-border">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
-          <Link to="/" className="flex items-center gap-2.5 group" style={{ textDecoration: 'none' }}>
+          <Link to="/" className="flex items-center gap-2.5 group no-underline">
             <img src="/favicon.svg" width={28} height={28} alt="Pingly" className="shrink-0" />
-            <span className="text-xl font-extrabold tracking-tight gradient-text select-none">
-              Pingly
-            </span>
+            <span className="text-xl font-extrabold tracking-tight gradient-text select-none">Pingly</span>
           </Link>
 
           <nav className="flex items-center gap-0.5">
@@ -40,12 +30,7 @@ export default function Layout() {
                 <Link
                   key={item.to}
                   to={item.to}
-                  className="flex items-center gap-1.5 px-3 py-2 rounded-lg text-sm font-medium transition-all duration-150"
-                  style={
-                    active
-                      ? { background: `${theme.accent}22`, color: theme.accent }
-                      : { color: theme.text2 }
-                  }
+                  className={`flex items-center gap-1.5 px-3 py-2 rounded-lg text-sm font-medium transition-colors duration-150 ${active ? 'bg-accent/15 text-accent' : 'text-text2'}`}
                 >
                   {item.icon}
                   <span className="hidden sm:inline">{item.label}</span>

@@ -1,12 +1,14 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64" role="img" aria-label="pingly">
   <defs>
-    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#eab308"/>
-      <stop offset="100%" stop-color="#f97316"/>
+    <linearGradient id="bg-pingly" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#facc15"></stop>
+      <stop offset="100%" stop-color="#a16207"></stop>
     </linearGradient>
   </defs>
-  <rect width="32" height="32" rx="8" fill="url(#bg)"/>
-  <circle cx="16" cy="23" r="2.5" fill="white"/>
-  <path d="M 11.5 19 Q 16 14 20.5 19" fill="none" stroke="white" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
-  <path d="M 8 15.5 Q 16 8 24 15.5" fill="none" stroke="white" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect width="64" height="64" rx="14.4" fill="url(#bg-pingly)"></rect>
+  <g color="#ffffff" transform="translate(6.399999999999999 6.399999999999999) scale(0.8)">
+    <g fill="none" stroke="currentColor" stroke-width="6" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M10 33 L22 33 L26 21 L32 45 L38 17 L44 33 L54 33"></path>
+  </g>
+  </g>
 </svg>

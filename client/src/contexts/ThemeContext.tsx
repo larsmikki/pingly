@@ -24,9 +24,35 @@ export const THEMES: ThemeDefinition[] = [
     border: 'rgba(0,0,0,0.09)',
     text: '#09090b',
     text2: '#71717a',
-    accent: '#ca8a04',
-    gradient: 'linear-gradient(135deg, #eab308 0%, #f59e0b 100%)',
+    accent: '#eab308',
+    gradient: 'linear-gradient(135deg, #facc15 0%, #a16207 100%)',
     previewColors: ['#e8eaed', '#d1d5db', '#eab308'],
+  },
+  {
+    name: 'Dark',
+    mode: 'dark',
+    bg: '#0a0a0a',
+    surface: '#111111',
+    surface2: '#1a1a1a',
+    border: 'rgba(234,179,8,0.18)',
+    text: '#f5f5f0',
+    text2: '#8a8878',
+    accent: '#eab308',
+    gradient: 'linear-gradient(135deg, #facc15 0%, #a16207 100%)',
+    previewColors: ['#1a1a1a', '#2a2a1a', '#eab308'],
+  },
+  {
+    name: 'Midnight',
+    mode: 'dark',
+    bg: '#050814',
+    surface: '#0d1117',
+    surface2: '#161b22',
+    border: 'rgba(6,182,212,0.15)',
+    text: '#e2f8ff',
+    text2: '#7d8ea0',
+    accent: '#06b6d4',
+    gradient: 'linear-gradient(135deg, #06b6d4 0%, #0284c7 100%)',
+    previewColors: ['#161b22', '#0d2a35', '#06b6d4'],
   },
   {
     name: 'Rainbow',
@@ -119,32 +145,6 @@ export const THEMES: ThemeDefinition[] = [
     gradient: 'linear-gradient(135deg, #343a40 0%, #495057 100%)',
     previewColors: ['#f1f3f5', '#e9ecef', '#dee2e6'],
   },
-  {
-    name: 'Dark',
-    mode: 'dark',
-    bg: '#0a0a0a',
-    surface: '#111111',
-    surface2: '#1a1a1a',
-    border: 'rgba(234,179,8,0.18)',
-    text: '#f5f5f0',
-    text2: '#8a8878',
-    accent: '#eab308',
-    gradient: 'linear-gradient(135deg, #eab308 0%, #ca8a04 100%)',
-    previewColors: ['#1a1a1a', '#2a2a1a', '#eab308'],
-  },
-  {
-    name: 'Midnight',
-    mode: 'dark',
-    bg: '#050814',
-    surface: '#0d1117',
-    surface2: '#161b22',
-    border: 'rgba(6,182,212,0.15)',
-    text: '#e2f8ff',
-    text2: '#7d8ea0',
-    accent: '#06b6d4',
-    gradient: 'linear-gradient(135deg, #06b6d4 0%, #0284c7 100%)',
-    previewColors: ['#161b22', '#0d2a35', '#06b6d4'],
-  },
 ]
 
 interface ThemeContextType {
@@ -167,13 +167,13 @@ export function ThemeProvider({ children }: { children: ReactNode }) {
     document.documentElement.classList.toggle('dark', theme.mode === 'dark')
 
     const root = document.documentElement
-    root.style.setProperty('--settings-bg', theme.bg)
-    root.style.setProperty('--settings-surface', theme.surface)
-    root.style.setProperty('--settings-surface2', theme.surface2)
-    root.style.setProperty('--settings-border', theme.border)
-    root.style.setProperty('--settings-text', theme.text)
-    root.style.setProperty('--settings-text2', theme.text2)
-    root.style.setProperty('--settings-accent', theme.accent)
+    root.style.setProperty('--theme-bg', theme.bg)
+    root.style.setProperty('--theme-surface', theme.surface)
+    root.style.setProperty('--theme-surface2', theme.surface2)
+    root.style.setProperty('--theme-border', theme.border)
+    root.style.setProperty('--theme-text', theme.text)
+    root.style.setProperty('--theme-text2', theme.text2)
+    root.style.setProperty('--theme-accent', theme.accent)
   }, [theme])
 
   const setThemeByName = (name: string) => {

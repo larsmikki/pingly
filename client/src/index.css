@@ -1,37 +1,34 @@
 @import "tailwindcss";
+@import "./tokens.css";
+
+/* Pingly keeps the app brand static across themes. ThemeContext still updates
+   --theme-accent for active states and the theme picker. */
+:root {
+  --brand-gradient: linear-gradient(135deg, #facc15 0%, #a16207 100%);
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+@custom-variant dark (&:where(.dark, .dark *));
 
 @layer base {
-  *, *::before, *::after {
-    box-sizing: border-box;
+  .dark {
+    color-scheme: dark;
   }
+
   body {
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
+
+  h1, h2, h3 {
+    text-wrap: balance;
+  }
 }
 
-/* ── Gradient text ──────────────────────────────────────────── */
-.gradient-text {
-  background: linear-gradient(135deg, #eab308 0%, #f97316 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-
-/* ── Card hover lift ────────────────────────────────────────── */
-.card-hover {
-  transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.15s ease;
-}
-.card-hover:hover {
-  transform: translateY(-2px);
-}
-
-/* ── Skeleton shimmer ───────────────────────────────────────── */
-@keyframes shimmer {
-  0%   { background-position: -400px 0; }
-  100% { background-position: 400px 0; }
-}
 .skeleton {
   background: linear-gradient(90deg, rgba(255,255,255,0.04) 25%, rgba(255,255,255,0.08) 50%, rgba(255,255,255,0.04) 75%);
   background-size: 800px 100%;
@@ -39,34 +36,79 @@
   border-radius: 8px;
 }
 
-/* ── Pulse animation for live status ───────────────────────── */
 @keyframes status-pulse {
   0%, 100% { opacity: 1; }
-  50%       { opacity: 0.4; }
+  50% { opacity: 0.4; }
 }
+
 .status-pulse {
   animation: status-pulse 2s ease-in-out infinite;
 }
 
-/* ── Custom scrollbar ───────────────────────────────────────── */
 ::-webkit-scrollbar {
   width: 5px;
   height: 5px;
 }
+
 ::-webkit-scrollbar-track {
   background: transparent;
 }
+
 ::-webkit-scrollbar-thumb {
-  background: rgba(234, 179, 8, 0.25);
+  background: rgb(from var(--color-accent) r g b / 0.30);
   border-radius: 4px;
 }
+
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(234, 179, 8, 0.45);
+  background: rgb(from var(--color-accent) r g b / 0.45);
 }
 
-/* ── Focus ring reset ───────────────────────────────────────── */
 input:focus-visible,
 textarea:focus-visible,
 select:focus-visible {
   outline: none;
+}
+
+@keyframes toast-slide-in {
+  from { transform: translateX(16px); opacity: 0; }
+  to { transform: translateX(0); opacity: 1; }
+}
+
+.toast-slide-in {
+  animation: toast-slide-in 200ms ease-out;
+}
+
+.bg-brand-gradient {
+  background: var(--brand-gradient);
+}
+
+.toast-success {
+  background: linear-gradient(rgb(from var(--color-success) r g b / 0.15), rgb(from var(--color-success) r g b / 0.15)), var(--color-surface);
+  border: 1px solid rgb(from var(--color-success) r g b / 0.40);
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.15), 0 2px 4px rgb(from var(--color-success) r g b / 0.20);
+}
+
+.toast-error {
+  background: linear-gradient(rgb(from var(--color-danger) r g b / 0.15), rgb(from var(--color-danger) r g b / 0.15)), var(--color-surface);
+  border: 1px solid rgb(from var(--color-danger) r g b / 0.40);
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.15), 0 2px 4px rgb(from var(--color-danger) r g b / 0.20);
+}
+
+.toast-info {
+  background: linear-gradient(rgb(from var(--color-accent) r g b / 0.15), rgb(from var(--color-accent) r g b / 0.15)), var(--color-surface);
+  border: 1px solid rgb(from var(--color-accent) r g b / 0.40);
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.15), 0 2px 4px rgb(from var(--color-accent) r g b / 0.20);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  .card-hover:hover {
+    transform: none;
+  }
 }

@@ -1,89 +1,63 @@
-import { useTheme } from '@/contexts/ThemeContext'
+import { Button, Surface } from '@/components/ui'
+
+const values = [
+  { label: '100% free forever', className: 'text-success bg-success/15 border-success/20' },
+  { label: 'No ads or tracking', className: 'text-warning bg-warning/15 border-warning/20' },
+  { label: 'Your data, your device', className: 'text-accent bg-accent/15 border-accent/20' },
+]
+
+const donationLinks = [
+  { title: 'Buy Me a Coffee', sub: 'One-time donation, any amount', url: 'https://buymeacoffee.com/larsmikki', label: 'Open Buy Me a Coffee' },
+  { title: 'PayPal', sub: 'Quick donation through PayPal', url: 'https://paypal.me/larsmikki', label: 'Open PayPal' },
+]
 
 export default function DonatePage() {
-  const { theme } = useTheme()
-
-  const sectionStyle = {
-    background: theme.surface,
-    border: `1px solid ${theme.border}`,
-    borderRadius: '16px',
-    padding: '24px',
-    marginBottom: '20px',
-  }
-
   return (
     <div className="max-w-2xl mx-auto">
       <div className="mb-8">
-        <h1 className="text-2xl font-extrabold tracking-tight" style={{ color: theme.text }}>
-          Support Pingly
-        </h1>
-        <p className="text-sm mt-0.5" style={{ color: theme.text2 }}>
-          I build privacy-first, self-hosted tools — no subscriptions, no ads, no tracking.
-          Your data stays yours. If this saves you time, consider supporting the work.
+        <h1 className="text-2xl font-extrabold tracking-tight text-text">Support Pingly</h1>
+        <p className="text-sm mt-0.5 text-text2">
+          I build privacy-first, self-hosted tools with no subscriptions, no ads, and no tracking. Your data stays yours.
         </p>
       </div>
 
-      <div style={sectionStyle}>
-        <h2 className="text-base font-bold mb-1" style={{ color: theme.text }}>What you get</h2>
-        <p className="text-xs mb-4" style={{ color: theme.text2 }}>
-          Pingly is and always will be free, open source, and self-hosted.
-        </p>
+      <Surface className="p-6 mb-5">
+        <h2 className="text-base font-bold mb-1 text-text">What you get</h2>
+        <p className="text-xs mb-5 text-text2">Pingly is free, open source, and self-hosted.</p>
         <div className="flex items-center gap-3 flex-wrap">
-          {[
-            { icon: '🛡️', label: '100% Free Forever', color: '#22c55e' },
-            { icon: '🔒', label: 'No Ads or Tracking', color: '#f59e0b' },
-            { icon: '💾', label: 'Your data, your device', color: '#eab308' },
-          ].map(({ icon, label, color }) => (
-            <div
-              key={label}
-              className="flex items-center gap-2 px-3 py-1.5 rounded-lg text-xs font-semibold"
-              style={{ background: `${color}15`, color, border: `1px solid ${color}20` }}
-            >
-              <span>{icon}</span>
+          {values.map(({ label, className }) => (
+            <div key={label} className={`flex items-center gap-2 px-3 py-1.5 rounded-lg text-xs font-semibold border ${className}`}>
+              <svg className="h-3.5 w-3.5" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                <path fillRule="evenodd" d="M10 18a8 8 0 1 0 0-16 8 8 0 0 0 0 16zm3.707-9.293a1 1 0 0 0-1.414-1.414L9 10.586 7.707 9.293a1 1 0 0 0-1.414 1.414l2 2a1 1 0 0 0 1.414 0l4-4z" clipRule="evenodd" />
+              </svg>
               <span>{label}</span>
             </div>
           ))}
         </div>
-      </div>
+      </Surface>
 
-      <div style={sectionStyle}>
-        <h2 className="text-base font-bold mb-1" style={{ color: theme.text }}>Donate</h2>
-        <p className="text-xs mb-5" style={{ color: theme.text2 }}>
-          One-time donations via Buy Me a Coffee or PayPal. Any amount is appreciated.
-        </p>
-        <div className="grid grid-cols-2 gap-4">
-          {[
-            { emoji: '☕', title: 'Buy Me a Coffee', sub: 'One-time donation, any amount', url: 'https://buymeacoffee.com/larsmikki', label: '☕ Buy Me a Coffee' },
-            { emoji: '💙', title: 'PayPal', sub: 'Quick & secure donation', url: 'https://paypal.me/larsmikki', label: '💙 Donate via PayPal' },
-          ].map(({ emoji, title, sub, url, label }) => (
-            <div
-              key={title}
-              className="flex flex-col items-center text-center gap-4 rounded-xl p-6"
-              style={{ background: theme.surface2, border: `1px solid ${theme.border}` }}
-            >
-              <div className="text-4xl">{emoji}</div>
+      <Surface className="p-6 mb-5">
+        <h2 className="text-base font-bold mb-1 text-text">Donate</h2>
+        <p className="text-xs mb-5 text-text2">One-time donations through Buy Me a Coffee or PayPal.</p>
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          {donationLinks.map(({ title, sub, url, label }) => (
+            <div key={title} className="flex flex-col text-center gap-4 rounded-xl p-6 bg-surface2 border border-border">
               <div>
-                <h3 className="text-sm font-bold mb-1" style={{ color: theme.text }}>{title}</h3>
-                <p className="text-xs" style={{ color: theme.text2 }}>{sub}</p>
+                <h3 className="text-base font-bold leading-snug mb-1 text-text">{title}</h3>
+                <p className="text-xs text-text2">{sub}</p>
               </div>
-              <button
-                onClick={() => window.open(url, '_blank')}
-                className="w-full py-2.5 text-sm font-semibold rounded-xl text-white transition-all hover:opacity-90"
-                style={{ background: theme.gradient, boxShadow: `0 4px 14px ${theme.accent}30` }}
-              >
+              <Button variant="primary" size="lg" fullWidth onClick={() => window.open(url, '_blank', 'noopener,noreferrer')}>
                 {label}
-              </button>
+              </Button>
             </div>
           ))}
         </div>
-      </div>
+      </Surface>
 
-      <div style={{ ...sectionStyle, marginBottom: 0 }}>
-        <h2 className="text-base font-bold mb-1" style={{ color: theme.text }}>Thank You!</h2>
-        <p className="text-xs" style={{ color: theme.text2 }}>
-          Every bit of support keeps Pingly free for everyone. Keep monitoring!
-        </p>
-      </div>
+      <Surface className="p-6 mb-0">
+        <h2 className="text-base font-bold mb-1 text-text">Thank you</h2>
+        <p className="text-xs text-text2">Every bit of support helps keep Pingly free for everyone.</p>
+      </Surface>
     </div>
   )
 }
