@@ -1,7 +1,9 @@
-import { useEffect, useState, type FormEvent, type MouseEvent } from 'react'
+import { useState, type FormEvent, type MouseEvent } from 'react'
 import { Link } from 'react-router-dom'
-import { api, type DownEvent } from '@/api'
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
+import { api } from '@/api'
 import { useMonitors } from '@/contexts/MonitorsContext'
+import { queryKeys } from '@/queryKeys'
 import { Button, ConfirmDialog, Input, Modal, Select, Surface, useToast } from '@/components/ui'
 import type { Monitor } from '@/types'
 
@@ -244,28 +246,38 @@ function SkeletonCard() {
 
 export default function FrontPage() {
   const { monitors, loading, refresh } = useMonitors()
+  const queryClient = useQueryClient()
   const { addToast } = useToast()
   const [showAdd, setShowAdd] = useState(false)
   const [search, setSearch] = useState('')
-  const [downEvents, setDownEvents] = useState<DownEvent[]>([])
-  const [eventsLoading, setEventsLoading] = useState(true)
+  const { data: downEvents = [], isLoading: eventsLoading } = useQuery({
+    queryKey: queryKeys.downEvents,
+    queryFn: api.getDownEvents,
+  })
 
-  useEffect(() => {
-    api.getDownEvents()
-      .then(setDownEvents)
-      .catch(() => addToast('Failed to load down events', 'error'))
-      .finally(() => setEventsLoading(false))
-  }, [addToast])
+  const dismissEventMutation = useMutation({
+    mutationFn: api.dismissEvent,
+    onSuccess: (_, id) => {
+      queryClient.setQueryData(queryKeys.downEvents, downEvents.filter(event => event.id !== id))
+    },
+    onError: () => addToast('Failed to dismiss down event', 'error'),
+  })
+
+  const dismissAllMutation = useMutation({
+    mutationFn: api.dismissAllEvents,
+    onSuccess: () => {
+      queryClient.setQueryData(queryKeys.downEvents, [])
+      void refresh()
+    },
+    onError: () => addToast('Failed to dismiss down events', 'error'),
+  })
 
   const handleDismiss = async (id: string) => {
-    await api.dismissEvent(id)
-    setDownEvents(prev => prev.filter(e => e.id !== id))
+    await dismissEventMutation.mutateAsync(id)
   }
 
   const handleDismissAll = async () => {
-    await api.dismissAllEvents()
-    setDownEvents([])
-    refresh()
+    await dismissAllMutation.mutateAsync()
   }
 
   const filtered = search.trim()

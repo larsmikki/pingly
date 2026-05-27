@@ -29,8 +29,10 @@ export const api = {
     fetchJson<Monitor>('/monitors', { method: 'POST', body: JSON.stringify(data) }),
   updateMonitor: (id: string, data: { name: string; url: string; interval: number; enabled: boolean; method?: string }) =>
     fetchJson<Monitor>(`/monitors/${id}`, { method: 'PUT', body: JSON.stringify(data) }),
-  deleteMonitor: (id: string) =>
-    fetch(`${BASE}/monitors/${id}`, { method: 'DELETE' }),
+  deleteMonitor: async (id: string) => {
+    const res = await fetch(`${BASE}/monitors/${id}`, { method: 'DELETE' })
+    if (!res.ok) throw new Error(`API error: ${res.status}`)
+  },
   getLogs: (id: string, limit = 20, offset = 0) =>
     fetchJson<CheckLog[]>(`/monitors/${id}/logs?limit=${limit}&offset=${offset}`),
   checkNow: (id: string) =>

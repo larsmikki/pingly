@@ -1,7 +1,9 @@
-import { useCallback, useEffect, useState, type FormEvent } from 'react'
+import { useState, type FormEvent } from 'react'
 import { Link, useNavigate, useParams } from 'react-router-dom'
+import { useQuery } from '@tanstack/react-query'
 import { api } from '@/api'
 import { useMonitors } from '@/contexts/MonitorsContext'
+import { queryKeys } from '@/queryKeys'
 import { Button, ConfirmDialog, Input, Select, Surface, useToast } from '@/components/ui'
 import type { CheckLog } from '@/types'
 
@@ -15,6 +17,15 @@ const INTERVAL_OPTIONS = [
   { label: '12 hours', value: 43200 },
   { label: '24 hours', value: 86400 },
 ]
+
+interface EditDraft {
+  monitorId: string
+  name: string
+  url: string
+  interval: number
+  enabled: boolean
+  method: 'HEAD' | 'GET'
+}
 
 function formatTime(ts: number): string {
   return new Date(ts).toLocaleString()
@@ -82,56 +93,56 @@ export default function MonitorDetailPage() {
   const navigate = useNavigate()
   const monitor = monitors.find(m => m.id === id)
 
-  const [logs, setLogs] = useState<CheckLog[]>([])
-  const [logsLoading, setLogsLoading] = useState(true)
   const [logsOffset, setLogsOffset] = useState(0)
-  const [editName, setEditName] = useState('')
-  const [editUrl, setEditUrl] = useState('')
-  const [editInterval, setEditInterval] = useState(300)
-  const [editEnabled, setEditEnabled] = useState(true)
-  const [editMethod, setEditMethod] = useState<'HEAD' | 'GET'>('HEAD')
+  const [editDraft, setEditDraft] = useState<EditDraft | null>(null)
   const [saving, setSaving] = useState(false)
   const [checking, setChecking] = useState(false)
   const [deleteOpen, setDeleteOpen] = useState(false)
 
-  useEffect(() => {
-    if (!monitor) return
-    setEditName(monitor.name)
-    setEditUrl(monitor.url)
-    setEditInterval(monitor.interval)
-    setEditEnabled(monitor.enabled)
-    setEditMethod(monitor.method || 'HEAD')
-  }, [monitor])
+  const {
+    data: logs = [],
+    isLoading: logsLoading,
+    refetch: refetchLogs,
+  } = useQuery<CheckLog[]>({
+    queryKey: queryKeys.logs(id ?? '', logsOffset, 20),
+    queryFn: () => api.getLogs(id!, 20, logsOffset),
+    enabled: Boolean(id),
+  })
 
-  const fetchLogs = useCallback(async () => {
-    if (!id) return
-    setLogsLoading(true)
-    try {
-      setLogs(await api.getLogs(id, 20, logsOffset))
-    } catch {
-      addToast('Failed to fetch check history', 'error')
-    } finally {
-      setLogsLoading(false)
-    }
-  }, [id, logsOffset, addToast])
+  const draft = monitor
+    ? editDraft?.monitorId === monitor.id
+      ? editDraft
+      : {
+          monitorId: monitor.id,
+          name: monitor.name,
+          url: monitor.url,
+          interval: monitor.interval,
+          enabled: monitor.enabled,
+          method: monitor.method || 'HEAD',
+        }
+    : null
 
-  useEffect(() => { fetchLogs() }, [fetchLogs])
+  const updateDraft = (patch: Partial<Omit<EditDraft, 'monitorId'>>) => {
+    if (!draft) return
+    setEditDraft({ ...draft, ...patch })
+  }
 
   const handleSave = async (e: FormEvent) => {
     e.preventDefault()
-    if (!id || !editName.trim() || !editUrl.trim()) {
+    if (!id || !draft || !draft.name.trim() || !draft.url.trim()) {
       addToast('Name and URL are required.', 'error')
       return
     }
     setSaving(true)
     try {
       await updateMonitor(id, {
-        name: editName.trim(),
-        url: editUrl.trim(),
-        interval: editInterval,
-        enabled: editEnabled,
-        method: editMethod,
+        name: draft.name.trim(),
+        url: draft.url.trim(),
+        interval: draft.interval,
+        enabled: draft.enabled,
+        method: draft.method,
       })
+      setEditDraft(null)
       addToast('Monitor saved', 'success')
     } finally {
       setSaving(false)
@@ -143,7 +154,7 @@ export default function MonitorDetailPage() {
     setChecking(true)
     try {
       await checkNow(id)
-      await fetchLogs()
+      await refetchLogs()
       addToast('Check complete', 'success')
     } finally {
       setChecking(false)
@@ -211,22 +222,22 @@ export default function MonitorDetailPage() {
         <form onSubmit={handleSave} className="flex flex-col gap-4">
           <div className="flex flex-col gap-1.5">
             <label className="text-xs uppercase tracking-wider font-semibold text-text2">Name</label>
-            <Input value={editName} onChange={e => setEditName(e.target.value)} />
+            <Input value={draft?.name ?? ''} onChange={e => updateDraft({ name: e.target.value })} />
           </div>
           <div className="flex flex-col gap-1.5">
             <label className="text-xs uppercase tracking-wider font-semibold text-text2">URL</label>
-            <Input type="url" value={editUrl} onChange={e => setEditUrl(e.target.value)} />
+            <Input type="url" value={draft?.url ?? ''} onChange={e => updateDraft({ url: e.target.value })} />
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-[1fr_112px_96px] gap-4">
             <div className="flex flex-col gap-1.5">
               <label className="text-xs uppercase tracking-wider font-semibold text-text2">Check interval</label>
-              <Select value={editInterval} onChange={e => setEditInterval(Number(e.target.value))}>
+              <Select value={draft?.interval ?? 300} onChange={e => updateDraft({ interval: Number(e.target.value) })}>
                 {INTERVAL_OPTIONS.map(option => <option key={option.value} value={option.value}>{option.label}</option>)}
               </Select>
             </div>
             <div className="flex flex-col gap-1.5">
               <label className="text-xs uppercase tracking-wider font-semibold text-text2">Method</label>
-              <Select value={editMethod} onChange={e => setEditMethod(e.target.value as 'HEAD' | 'GET')}>
+              <Select value={draft?.method ?? 'HEAD'} onChange={e => updateDraft({ method: e.target.value as 'HEAD' | 'GET' })}>
                 <option value="HEAD">HEAD</option>
                 <option value="GET">GET</option>
               </Select>
@@ -235,10 +246,10 @@ export default function MonitorDetailPage() {
               <label className="text-xs uppercase tracking-wider font-semibold text-text2">Enabled</label>
               <button
                 type="button"
-                onClick={() => setEditEnabled(value => !value)}
-                className={`h-[42px] px-3 rounded-lg text-sm font-semibold transition-opacity hover:opacity-80 border ${editEnabled ? 'bg-accent/15 text-accent border-accent' : 'bg-surface2 text-text2 border-border'}`}
+                onClick={() => updateDraft({ enabled: !(draft?.enabled ?? true) })}
+                className={`h-[42px] px-3 rounded-lg text-sm font-semibold transition-opacity hover:opacity-80 border ${draft?.enabled ? 'bg-accent/15 text-accent border-accent' : 'bg-surface2 text-text2 border-border'}`}
               >
-                {editEnabled ? 'On' : 'Off'}
+                {draft?.enabled ? 'On' : 'Off'}
               </button>
             </div>
           </div>

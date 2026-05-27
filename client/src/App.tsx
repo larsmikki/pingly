@@ -1,6 +1,6 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
-import { ThemeProvider } from '@/contexts/ThemeContext'
-import { MonitorsProvider } from '@/contexts/MonitorsContext'
+import { ThemeProvider } from '@/contexts/ThemeProvider'
+import { MonitorsProvider } from '@/contexts/MonitorsProvider'
 import Layout from '@/components/Layout'
 import FrontPage from '@/pages/FrontPage'
 import MonitorDetailPage from '@/pages/MonitorDetailPage'

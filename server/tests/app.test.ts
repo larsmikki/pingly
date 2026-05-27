@@ -1,19 +1,19 @@
 import { describe, it, expect, beforeAll, afterEach, vi } from 'vitest';
 import request from 'supertest';
-// @ts-ignore
+// @ts-expect-error sql.js has no bundled types
 import initSqlJs, { Database } from 'sql.js';
-import { createApp } from '../app.js';
+import { createApp } from '../src/app.js';
 
 // vitest allows variables prefixed with "mock" to be referenced inside vi.mock() factories
 let mockDb: Database;
 
-vi.mock('../db/connection.js', () => ({
+vi.mock('../src/db/connection.js', () => ({
   getDb: () => mockDb,
   saveDb: vi.fn(),
   initDb: vi.fn(),
 }));
 
-vi.mock('../poller.js', () => ({
+vi.mock('../src/poller.js', () => ({
   addOrUpdatePoller: vi.fn(),
   removePoller: vi.fn(),
   performCheck: vi.fn().mockResolvedValue(undefined),
@@ -128,7 +128,7 @@ describe('PUT /api/monitors/:id', () => {
   });
 
   it('disabling a monitor removes the poller', async () => {
-    const { removePoller } = await import('../poller.js');
+    const { removePoller } = await import('../src/poller.js');
     insertMonitor('id-3');
     await request(app)
       .put('/api/monitors/id-3')
@@ -202,7 +202,7 @@ describe('POST /api/monitors/:id/check', () => {
   });
 
   it('triggers a check and returns the updated monitor', async () => {
-    const { performCheck } = await import('../poller.js');
+    const { performCheck } = await import('../src/poller.js');
     insertMonitor('id-7');
     const res = await request(app).post('/api/monitors/id-7/check');
     expect(res.status).toBe(200);

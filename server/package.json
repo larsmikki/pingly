@@ -7,7 +7,8 @@
     "dev": "tsx watch src/index.ts",
     "build": "tsc",
     "start": "node dist/index.js",
-    "test": "vitest run"
+    "test": "vitest run",
+    "lint": "eslint ."
   },
   "dependencies": {
     "compression": "^1.8.1",
@@ -17,15 +18,19 @@
     "sql.js": "^1.11.0"
   },
   "devDependencies": {
+    "@eslint/js": "^9.39.4",
     "@types/compression": "^1.8.1",
     "@types/cors": "^2.8.17",
     "@types/express": "^5.0.0",
     "@types/morgan": "^1.9.9",
     "@types/node": "^22.10.0",
     "@types/supertest": "^7.2.0",
+    "eslint": "^9.39.4",
+    "globals": "^17.4.0",
     "supertest": "^7.2.2",
     "tsx": "^4.19.0",
     "typescript": "^5.7.0",
+    "typescript-eslint": "^8.57.0",
     "vitest": "^4.1.4"
   }
 }

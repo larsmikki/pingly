@@ -1,17 +1,16 @@
-<svg width="180" height="180" viewBox="0 0 180 180" fill="none" xmlns="http://www.w3.org/2000/svg">
+<svg width="180" height="180" viewBox="0 0 180 180" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Pingly">
   <defs>
-    <linearGradient id="pingly-touch-bg" x1="0" y1="0" x2="1" y2="1" gradientUnits="objectBoundingBox">
-      <stop offset="0%" stop-color="#facc15"/>
-      <stop offset="100%" stop-color="#a16207"/>
-    </linearGradient>
-    <linearGradient id="pingly-touch-sh" x1="0" y1="0" x2="0" y2="1" gradientUnits="objectBoundingBox">
-      <stop offset="0%" stop-color="white" stop-opacity="0.22"/>
-      <stop offset="100%" stop-color="white" stop-opacity="0"/>
+    <linearGradient id="bg-pingly" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#facc15"></stop>
+      <stop offset="100%" stop-color="#a16207"></stop>
     </linearGradient>
   </defs>
-  <rect width="180" height="180" rx="40" fill="url(#pingly-touch-bg)"/>
-  <rect width="180" height="100" rx="40" fill="url(#pingly-touch-sh)"/>
-  <circle cx="90" cy="90" r="50" fill="white" opacity="0.36"/>
-  <circle cx="90" cy="90" r="37" fill="white" opacity="0.95"/>
-  <path d="M84.75 111.75C83.25 111.75 81.8 111.15 80.75 110.1L68.25 97.6C66 95.35 66 91.75 68.25 89.5C70.5 87.25 74.1 87.25 76.35 89.5L84.6 97.75L104.5 76.7C106.7 74.4 110.3 74.3 112.6 76.5C114.9 78.65 115 82.3 112.8 84.6L88.9 109.9C87.85 111.1 86.3 111.75 84.75 111.75Z" fill="#ca8a04" opacity="0.92"/>
+  <g transform="scale(2.8125)">
+    <rect width="64" height="64" rx="14.4" fill="url(#bg-pingly)"></rect>
+  <g color="#ffffff" transform="translate(6.399999999999999 6.399999999999999) scale(0.8)">
+    <g fill="none" stroke="currentColor" stroke-width="6" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M10 33 L22 33 L26 21 L32 45 L38 17 L44 33 L54 33"></path>
+  </g>
+  </g>
+  </g>
 </svg>

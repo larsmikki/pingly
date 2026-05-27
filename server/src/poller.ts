@@ -19,11 +19,10 @@ export async function performCheck(monitorId: string, url: string, method = 'HEA
   let statusCode: number | null = null;
   let responseTime: number | null = null;
   let error: string | null = null;
-  let usedMethod = method;
   let updatedMethod = false;
 
   try {
-    let result = await doFetch(url, method, 10_000);
+    const result = await doFetch(url, method, 10_000);
     responseTime = Date.now() - start;
     statusCode = result.status;
     status = result.ok ? 'up' : 'down';
@@ -34,7 +33,6 @@ export async function performCheck(monitorId: string, url: string, method = 'HEA
       statusCode = fallback.status;
       if (fallback.ok) {
         status = 'up';
-        usedMethod = 'GET';
         updatedMethod = true;
       }
     }
