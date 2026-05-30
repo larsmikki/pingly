@@ -192,7 +192,7 @@ router.get('/down-events', (req, res) => {
     `SELECT cl.id, cl.monitor_id, cl.status, cl.status_code, cl.response_time, cl.error, cl.checked_at, m.name, m.url 
      FROM check_logs cl 
      JOIN monitors m ON cl.monitor_id = m.id 
-     WHERE cl.status = 'down' AND cl.checked_at >= $since AND (cl.seen = 0 OR cl.seen IS NULL)
+     WHERE cl.status IN ('down', 'error') AND cl.checked_at >= $since AND (cl.seen = 0 OR cl.seen IS NULL)
      ORDER BY cl.checked_at DESC`,
     { $since: since }
   );
@@ -222,7 +222,7 @@ router.post('/dismiss-all-events', (req, res) => {
   const db = getDb();
   const since = Date.now() - (24 * 60 * 60 * 1000);
   db.run(
-    'UPDATE check_logs SET seen = 1 WHERE status = \'down\' AND checked_at >= $since',
+    'UPDATE check_logs SET seen = 1 WHERE status IN (\'down\', \'error\') AND checked_at >= $since',
     { $since: since }
   );
   saveDb();

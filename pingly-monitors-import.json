@@ -4,7 +4,7 @@
   { "name": "Linky",   "url": "http://192.168.3.25:3020/", "interval": 300, "enabled": true },
   { "name": "Prompty", "url": "http://192.168.3.25:3060/", "interval": 300, "enabled": true },
   { "name": "Boxy",    "url": "http://192.168.3.25:3070/", "interval": 300, "enabled": true },
-  { "name": "Remindy", "url": "http://192.168.3.25:3080/", "interval": 300, "enabled": true },
+  { "name": "Remindr", "url": "http://192.168.3.25:3080/", "interval": 300, "enabled": true },
   { "name": "Applyr",  "url": "http://192.168.3.25:3090/", "interval": 300, "enabled": true },
   { "name": "Tradey",  "url": "http://192.168.3.25:3100/", "interval": 300, "enabled": true }
 ]
