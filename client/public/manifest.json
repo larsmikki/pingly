@@ -1,6 +1,6 @@
 {
-  "name": "Pingly",
-  "short_name": "Pingly",
+  "name": "Pingr",
+  "short_name": "Pingr",
   "description": "Self-hosted URL uptime monitor",
   "start_url": "/",
   "display": "standalone",

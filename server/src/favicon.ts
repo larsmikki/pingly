@@ -31,7 +31,7 @@ try {
     try {
       console.log(`[favicon] Fetching HTML from: ${origin}`);
       const res = await fetch(origin, {
-        headers: { 'User-Agent': 'Mozilla/5.0 (compatible; Pingly/1.0)' },
+        headers: { 'User-Agent': 'Mozilla/5.0 (compatible; monitor/1.0)' },
         signal: AbortSignal.timeout(5000),
         redirect: 'follow',
       });
@@ -52,7 +52,7 @@ try {
       console.log(`[favicon] Trying candidate: ${candidateUrl}`);
       try {
         const iconRes = await fetch(candidateUrl, {
-          headers: { 'User-Agent': 'Mozilla/5.0 (compatible; Pingly/1.0)' },
+          headers: { 'User-Agent': 'Mozilla/5.0 (compatible; monitor/1.0)' },
           signal: AbortSignal.timeout(5000),
           redirect: 'follow',
         });

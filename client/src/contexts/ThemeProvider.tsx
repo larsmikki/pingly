@@ -3,14 +3,14 @@ import { ThemeContext, THEMES, type ThemeDefinition } from './ThemeContext'
 
 export function ThemeProvider({ children }: { children: ReactNode }) {
   const [theme, setTheme] = useState<ThemeDefinition>(() => {
-    const stored = localStorage.getItem('pingly-theme')
+    const stored = localStorage.getItem('theme')
     if (!stored) return THEMES[0]
     const found = THEMES.find(t => t.name === stored)
     return found || THEMES[0]
   })
 
   useEffect(() => {
-    localStorage.setItem('pingly-theme', theme.name)
+    localStorage.setItem('theme', theme.name)
     document.documentElement.classList.toggle('dark', theme.mode === 'dark')
 
     const root = document.documentElement

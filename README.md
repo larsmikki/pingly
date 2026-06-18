@@ -1,13 +1,13 @@
-# Pingly
+# Pingr
 
 ![screenshot](screenshot.png)
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
-[![Docker Hub](https://img.shields.io/badge/Docker%20Hub-larsmikki%2Fpingly-blue?logo=docker)](https://hub.docker.com/r/larsmikki/pingly)
-[![ghcr.io](https://img.shields.io/badge/ghcr.io-larsmikki%2Fpingly-blue?logo=github)](https://github.com/larsmikki/pingly/pkgs/container/pingly)
+[![Docker Hub](https://img.shields.io/badge/Docker%20Hub-larsmikki%2Fpingr-blue?logo=docker)](https://hub.docker.com/r/larsmikki/pingr)
+[![ghcr.io](https://img.shields.io/badge/ghcr.io-larsmikki%2Fpingr-blue?logo=github)](https://github.com/larsmikki/pingr/pkgs/container/pingr)
 [![Node 20](https://img.shields.io/badge/Node-20-brightgreen?logo=node.js)](https://nodejs.org/)
 
-**Pingly** is a self-hosted uptime monitor. Add URLs, set check intervals, and get an instant view of what's up and what's down — no accounts, no cloud, runs in a single Docker container.
+**Pingr** is a self-hosted uptime monitor. Add URLs, set check intervals, and get an instant view of what's up and what's down — no accounts, no cloud, runs in a single Docker container.
 
 ## Features
 
@@ -36,28 +36,28 @@ Works on Synology, Unraid, TrueNAS, QNAP, Proxmox, or a plain Docker host.
 
 ```bash
 docker run -d \
-  --name pingly \
+  --name pingr \
   -p 3040:3040 \
-  -v pingly-data:/app/data \
+  -v pingr-data:/app/data \
   --restart unless-stopped \
-  larsmikki/pingly:latest
+  larsmikki/pingr:latest
 ```
 
 Or with Compose:
 
 ```yaml
 services:
-  pingly:
-    image: larsmikki/pingly:latest
-    container_name: pingly
+  pingr:
+    image: larsmikki/pingr:latest
+    container_name: pingr
     ports:
       - "3040:3040"
     volumes:
-      - pingly-data:/app/data
+      - pingr-data:/app/data
     restart: unless-stopped
 
 volumes:
-  pingly-data:
+  pingr-data:
 ```
 
 ### 2. Local install on Windows
@@ -65,8 +65,8 @@ volumes:
 Requires [Git for Windows](https://git-scm.com/download/win) and [Node.js 20+](https://nodejs.org/).
 
 ```powershell
-git clone https://github.com/larsmikki/pingly.git
-cd pingly
+git clone https://github.com/larsmikki/pingr.git
+cd pingr
 npm install
 npm run dev
 ```
@@ -77,8 +77,8 @@ For a production build: `npm run build && npm start`.
 
 ```bash
 brew install node git
-git clone https://github.com/larsmikki/pingly.git
-cd pingly
+git clone https://github.com/larsmikki/pingr.git
+cd pingr
 npm install
 npm run dev
 ```
@@ -93,8 +93,8 @@ Debian/Ubuntu:
 curl -fsSL https://deb.nodesource.com/setup_20.x | sudo -E bash -
 sudo apt-get install -y nodejs git
 
-git clone https://github.com/larsmikki/pingly.git
-cd pingly
+git clone https://github.com/larsmikki/pingr.git
+cd pingr
 npm install
 npm run dev
 ```
@@ -128,8 +128,19 @@ All data is stored in a single SQLite file inside the Docker volume:
 
 ```
 /app/data/
-  pingly.db    # monitors, check logs, and settings
+  data.db    # monitors, check logs, and settings
 ```
+
+## Upgrade note (Pingly → Pingr)
+
+The database file was renamed from `pingly.db` to `data.db` and the localStorage theme key was
+changed from `pingly-theme` to `theme`. Existing installs will start with a fresh database and
+reset theme on first launch. To preserve your monitors, export them from Pingly first
+(**Settings → Export**) and import the JSON into Pingr after upgrading.
+
+The Docker volume was renamed from `pingly-data` to `pingr-data`. If you have an existing
+deployment, either keep the old volume name in your compose file, or copy the data directory
+contents to the new volume before starting Pingr.
 
 ## License
 
@@ -137,4 +148,4 @@ All data is stored in a single SQLite file inside the Docker volume:
 
 ## Support
 
-If Pingly saves you time, consider [buying me a coffee](https://buymeacoffee.com/larsmikki) or [donating via PayPal](https://paypal.me/larsmikki). It helps keep the project free and maintained.
+If Pingr saves you time, consider [buying me a coffee](https://buymeacoffee.com/larsmikki) or [donating via PayPal](https://paypal.me/larsmikki). It helps keep the project free and maintained.

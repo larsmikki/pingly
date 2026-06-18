@@ -1,11 +1,11 @@
 services:
-  pingly:
-    image: larsmikki/pingly:latest
-    container_name: pingly
+  pingr:
+    image: larsmikki/pingr:latest
+    container_name: pingr
     ports:
       - "3040:3040"
     volumes:
-      - pingly-data:/app/data
+      - pingr-data:/app/data
     restart: unless-stopped
     healthcheck:
       test: ["CMD", "wget", "--spider", "-q", "http://localhost:3040/api/health"]
@@ -14,4 +14,4 @@ services:
       retries: 3
 
 volumes:
-  pingly-data:
+  pingr-data:

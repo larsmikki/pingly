@@ -6,7 +6,7 @@ import { config } from '../config.js';
 
 let db: Database;
 
-const dbPath = path.join(config.dataDir, 'pingly.db');
+const dbPath = path.join(config.dataDir, 'data.db');
 
 export async function initDb(): Promise<Database> {
   if (db) return db;
