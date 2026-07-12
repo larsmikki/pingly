@@ -1,11 +1,11 @@
 services:
-  pingr:
-    image: larsmikki/pingr:latest
-    container_name: pingr
+  pulse:
+    image: larsmikki/pulse:latest
+    container_name: pulse
     ports:
       - "3040:3040"
     volumes:
-      - pingr-data:/app/data
+      - pulse-data:/app/data
     restart: unless-stopped
     healthcheck:
       test: ["CMD", "wget", "--spider", "-q", "http://localhost:3040/api/health"]
@@ -14,4 +14,4 @@ services:
       retries: 3
 
 volumes:
-  pingr-data:
+  pulse-data:

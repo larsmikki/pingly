@@ -1,6 +1,6 @@
 {
-  "name": "Pingr",
-  "short_name": "Pingr",
+  "name": "Pulse",
+  "short_name": "Pulse",
   "description": "Self-hosted URL uptime monitor",
   "start_url": "/",
   "display": "standalone",
