@@ -30,7 +30,7 @@ export default function SettingsPage() {
     const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' })
     const link = document.createElement('a')
     link.href = URL.createObjectURL(blob)
-    link.download = 'pulse-monitors.json'
+    link.download = 'uptime-pulse-monitors.json'
     link.click()
     URL.revokeObjectURL(link.href)
     addToast('Export ready', 'success')
@@ -79,12 +79,12 @@ export default function SettingsPage() {
     <div className="max-w-2xl mx-auto">
       <div className="mb-8">
         <h1 className="text-2xl font-extrabold tracking-tight text-text">Settings</h1>
-        <p className="text-sm mt-0.5 text-text2">Customize your Pulse experience.</p>
+        <p className="text-sm mt-0.5 text-text2">Customize your Uptime Pulse experience.</p>
       </div>
 
       <Surface className="p-6 mb-5">
         <h2 className="text-base font-bold mb-1 text-text">Themes</h2>
-            <p className="text-xs mb-5 text-text2">Choose how Pulse looks to you.</p>
+            <p className="text-xs mb-5 text-text2">Choose how Uptime Pulse looks to you.</p>
         <ThemePicker />
       </Surface>
 

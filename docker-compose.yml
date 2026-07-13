@@ -1,11 +1,11 @@
 services:
-  pulse:
-    image: larsmikki/pulse:latest
-    container_name: pulse
+  uptime-pulse:
+    image: larsmikki/uptime-pulse:latest
+    container_name: uptime-pulse
     ports:
       - "3040:3040"
     volumes:
-      - pulse-data:/app/data
+      - uptime-pulse-data:/app/data
     restart: unless-stopped
     healthcheck:
       test: ["CMD", "wget", "--spider", "-q", "http://localhost:3040/api/health"]
@@ -14,4 +14,4 @@ services:
       retries: 3
 
 volumes:
-  pulse-data:
+  uptime-pulse-data:

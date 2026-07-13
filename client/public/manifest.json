@@ -1,6 +1,6 @@
 {
-  "name": "Pulse",
-  "short_name": "Pulse",
+  "name": "Uptime Pulse",
+  "short_name": "Uptime Pulse",
   "description": "Self-hosted URL uptime monitor",
   "start_url": "/",
   "display": "standalone",

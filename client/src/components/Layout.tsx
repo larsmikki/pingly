@@ -20,8 +20,8 @@ export default function Layout() {
       <header className="sticky top-0 z-40 backdrop-blur-md bg-surface/90 border-b border-border">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
           <Link to="/" className="flex items-center gap-2.5 group no-underline">
-            <img src="/favicon.svg" width={28} height={28} alt="Pulse" className="shrink-0" />
-            <span className="text-xl font-extrabold tracking-tight gradient-text select-none">Pulse</span>
+            <img src="/favicon.svg" width={28} height={28} alt="Uptime Pulse" className="shrink-0" />
+            <span className="text-xl font-extrabold tracking-tight gradient-text select-none">Uptime Pulse</span>
           </Link>
 
           <nav className="flex items-center gap-0.5">

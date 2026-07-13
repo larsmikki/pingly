@@ -1,7 +1,7 @@
 @import "tailwindcss";
 @import "./tokens.css";
 
-/* Pulse keeps the app brand static across themes. ThemeContext still updates
+/* Uptime Pulse keeps the app brand static across themes. ThemeContext still updates
    --theme-accent for active states and the theme picker. */
 :root {
   --brand-gradient: linear-gradient(135deg, #facc15 0%, #a16207 100%);

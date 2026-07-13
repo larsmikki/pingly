@@ -4,7 +4,7 @@ export default function Footer() {
     <footer className="bg-surface border-t border-border">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 h-12 flex items-center justify-between">
         <span className="text-xs text-text2">
-          &copy; {new Date().getFullYear()} Pulse
+          &copy; {new Date().getFullYear()} Uptime Pulse
         </span>
         <div className="flex items-center gap-4">
           <Link to="/donate" className="flex items-center gap-1.5 text-xs text-text2 transition-opacity hover:opacity-80">

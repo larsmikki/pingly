@@ -1,5 +1,5 @@
 {
-  "name": "pulse",
+  "name": "uptime-pulse",
   "version": "1.0.0",
   "private": true,
   "workspaces": [
