@@ -1,13 +1,13 @@
-# Uptime Pulse
+# Pulse
 
 ![screenshot](screenshot.png)
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
-[![Docker Hub](https://img.shields.io/badge/Docker%20Hub-larsmikki%2Fuptime--pulse-blue?logo=docker)](https://hub.docker.com/r/larsmikki/uptime-pulse)
-[![ghcr.io](https://img.shields.io/badge/ghcr.io-larsmikki%2Fuptime--pulse-blue?logo=github)](https://github.com/larsmikki/uptime-pulse/pkgs/container/uptime-pulse)
+[![Docker Hub](https://img.shields.io/badge/Docker%20Hub-larsmikki%2Fpulse-blue?logo=docker)](https://hub.docker.com/r/larsmikki/pulse)
+[![ghcr.io](https://img.shields.io/badge/ghcr.io-larsmikki%2Fpulse-blue?logo=github)](https://github.com/larsmikki/pulse/pkgs/container/pulse)
 [![Node 20](https://img.shields.io/badge/Node-20-brightgreen?logo=node.js)](https://nodejs.org/)
 
-**Uptime Pulse** is a self-hosted uptime monitor. Add URLs, set check intervals, and get an instant view of what's up and what's down — no accounts, no cloud, runs in a single Docker container.
+**Pulse** is a self-hosted uptime monitor. Add URLs, set check intervals, and get an instant view of what's up and what's down — no accounts, no cloud, runs in a single Docker container.
 
 ## Features
 
@@ -36,28 +36,28 @@ Works on Synology, Unraid, TrueNAS, QNAP, Proxmox, or a plain Docker host.
 
 ```bash
 docker run -d \
-  --name uptime-pulse \
+  --name pulse \
   -p 3040:3040 \
-  -v uptime-pulse-data:/app/data \
+  -v pulse-data:/app/data \
   --restart unless-stopped \
-  larsmikki/uptime-pulse:latest
+  larsmikki/pulse:latest
 ```
 
 Or with Compose:
 
 ```yaml
 services:
-  uptime-pulse:
-    image: larsmikki/uptime-pulse:latest
-    container_name: uptime-pulse
+  pulse:
+    image: larsmikki/pulse:latest
+    container_name: pulse
     ports:
       - "3040:3040"
     volumes:
-      - uptime-pulse-data:/app/data
+      - pulse-data:/app/data
     restart: unless-stopped
 
 volumes:
-  uptime-pulse-data:
+  pulse-data:
 ```
 
 ### 2. Local install on Windows
@@ -65,8 +65,8 @@ volumes:
 Requires [Git for Windows](https://git-scm.com/download/win) and [Node.js 20+](https://nodejs.org/).
 
 ```powershell
-git clone https://github.com/larsmikki/uptime-pulse.git
-cd uptime-pulse
+git clone https://github.com/larsmikki/pulse.git
+cd pulse
 npm install
 npm run dev
 ```
@@ -77,8 +77,8 @@ For a production build: `npm run build && npm start`.
 
 ```bash
 brew install node git
-git clone https://github.com/larsmikki/uptime-pulse.git
-cd uptime-pulse
+git clone https://github.com/larsmikki/pulse.git
+cd pulse
 npm install
 npm run dev
 ```
@@ -93,8 +93,8 @@ Debian/Ubuntu:
 curl -fsSL https://deb.nodesource.com/setup_20.x | sudo -E bash -
 sudo apt-get install -y nodejs git
 
-git clone https://github.com/larsmikki/uptime-pulse.git
-cd uptime-pulse
+git clone https://github.com/larsmikki/pulse.git
+cd pulse
 npm install
 npm run dev
 ```
@@ -131,15 +131,15 @@ All data is stored in a single SQLite file inside the Docker volume:
   data.db    # monitors, check logs, and settings
 ```
 
-## Upgrade note (Pulse → Uptime Pulse)
+## Upgrade note (Uptime Pulse → Pulse)
 
 The database filename (`data.db`) and localStorage theme key (`theme`) are brand-neutral, so
 renaming the app does not reset application data or preferences when the same data directory is
 used.
 
-The Docker volume was renamed from `pulse-data` to `uptime-pulse-data`. If you have an existing
+The Docker volume was renamed from `uptime-pulse-data` to `pulse-data`. If you have an existing
 deployment, either keep the old volume name in your compose file, or copy the data directory
-contents to the new volume before starting Uptime Pulse.
+contents to the new volume before starting Pulse.
 
 ## License
 
@@ -147,4 +147,4 @@ contents to the new volume before starting Uptime Pulse.
 
 ## Support
 
-If Uptime Pulse saves you time, consider [buying me a coffee](https://buymeacoffee.com/larsmikki) or [donating via PayPal](https://paypal.me/larsmikki). It helps keep the project free and maintained.
+If Pulse saves you time, consider [buying me a coffee](https://buymeacoffee.com/larsmikki) or [donating via PayPal](https://paypal.me/larsmikki). It helps keep the project free and maintained.

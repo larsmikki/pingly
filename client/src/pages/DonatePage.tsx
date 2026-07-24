@@ -15,7 +15,7 @@ export default function DonatePage() {
   return (
     <div className="max-w-2xl mx-auto">
       <div className="mb-8">
-        <h1 className="text-2xl font-extrabold tracking-tight text-text">Support Uptime Pulse</h1>
+        <h1 className="text-2xl font-extrabold tracking-tight text-text">Support Pulse</h1>
         <p className="text-sm mt-0.5 text-text2">
           I build privacy-first, self-hosted tools with no subscriptions, no ads, and no tracking. Your data stays yours.
         </p>
@@ -23,7 +23,7 @@ export default function DonatePage() {
 
       <Surface className="p-6 mb-5">
         <h2 className="text-base font-bold mb-1 text-text">What you get</h2>
-            <p className="text-xs mb-5 text-text2">Uptime Pulse is free, open source, and self-hosted.</p>
+            <p className="text-xs mb-5 text-text2">Pulse is free, open source, and self-hosted.</p>
         <div className="flex items-center gap-3 flex-wrap">
           {values.map(({ label, className }) => (
             <div key={label} className={`flex items-center gap-2 px-3 py-1.5 rounded-lg text-xs font-semibold border ${className}`}>
@@ -56,7 +56,7 @@ export default function DonatePage() {
 
       <Surface className="p-6 mb-0">
         <h2 className="text-base font-bold mb-1 text-text">Thank you</h2>
-            <p className="text-xs text-text2">Every bit of support helps keep Uptime Pulse free for everyone.</p>
+            <p className="text-xs text-text2">Every bit of support helps keep Pulse free for everyone.</p>
       </Surface>
     </div>
   )
