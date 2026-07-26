@@ -109,6 +109,7 @@ For a production build: `npm run build && npm start`.
 |----------|---------|-------------|
 | `PORT` | `3040` | Port the server listens on |
 | `DATA_DIR` | `/app/data` | Directory for the SQLite database |
+| `LOG_RETENTION_DAYS` | `7` | Days of check history to retain; cleanup runs on startup and every 24 hours |
 
 ## Usage
 

@@ -2,6 +2,7 @@ import { Router } from 'express';
 import { getDb, saveDb } from '../db/connection.js';
 import { addOrUpdatePoller, removePoller, performCheck } from '../poller.js';
 import { fetchAndSaveFavicon, deleteFavicon } from '../favicon.js';
+import { cleanupLogs } from '../logCleanup.js';
 
 const router = Router();
 
@@ -88,15 +89,10 @@ router.put('/bulk-interval', (req, res) => {
 });
 
 router.post('/clean-logs', (req, res) => {
-  const db = getDb();
   const { days } = req.body as { days: number };
   if (!days || days < 1) { res.status(400).json({ error: 'Invalid days' }); return; }
 
-  const cutoff = Date.now() - (days * 24 * 60 * 60 * 1000);
-  db.run('DELETE FROM check_logs WHERE checked_at < $cutoff', { $cutoff: cutoff });
-  const result = db.exec('SELECT changes()');
-  saveDb();
-  res.json({ deleted: result[0]?.values[0]?.[0] as number || 0 });
+  res.json({ deleted: cleanupLogs(days) });
 });
 
 router.put('/:id', async (req, res) => {

@@ -3,6 +3,7 @@ import { runMigrations } from './db/migrate.js';
 import { createApp } from './app.js';
 import { config } from './config.js';
 import { startPoller } from './poller.js';
+import { startLogCleanup } from './logCleanup.js';
 
 async function main() {
   await initDb();
@@ -11,6 +12,9 @@ async function main() {
 
   startPoller();
   console.log('Poller started');
+
+  startLogCleanup(config.logRetentionDays);
+  console.log(`Daily log cleanup started (${config.logRetentionDays}-day retention)`);
 
   const app = createApp();
   app.listen(config.port, () => {
